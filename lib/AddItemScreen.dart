@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:prov3/ItemAddNotifier.dart';
+
 
 
 class AddItemScreen extends StatelessWidget {
@@ -9,7 +11,7 @@ class AddItemScreen extends StatelessWidget {
 
   final TextEditingController _itemNamecontroller = TextEditingController();
 
-
+  /// [=== build() ===]
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,11 +31,13 @@ class AddItemScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
             RaisedButton(
-              child: Text("ADD"),
+              child: Text("ADD ITEM"),
               onPressed: (){
                 if(_itemNamecontroller.text.isEmpty){
                   return;
                 }
+                ItemAddNotifier itemAddNotifier = ItemAddNotifier();
+                itemAddNotifier.addItem(_itemNamecontroller.text);
                 Navigator.pop(context);
               },
             ),

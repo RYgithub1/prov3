@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:prov3/AddItemScreen.dart';
+import 'package:prov3/ItemAddNotifier.dart';
+import 'package:provider/provider.dart';
+
 
 
 class HomeScreen extends StatelessWidget {
@@ -33,7 +36,24 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
 
-            
+            Consumer<ItemAddNotifier>(    /// [(4)Use addItem with Consumer<T>()]
+              builder: (context, itemAddNotifier, _) {
+                return Expanded(
+                  child: ListView.builder(
+                    itemCount: itemAddNotifier.itemList.length,
+                    itemBuilder: (context, index){
+                      return Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Text(
+                          itemAddNotifier.itemList[index].itemName,
+                          style: TextStyle(fontSize:20, color: Colors.blue),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
 
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prov3/ItemAddNotifier.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -9,7 +10,7 @@ class AddItemScreen extends StatelessWidget {
 
   final String title = "ADD ITEM";
 
-  final TextEditingController _itemNamecontroller = TextEditingController();
+  final TextEditingController _itemNameController = TextEditingController();
 
   /// [=== build() ===]
   @override
@@ -23,7 +24,7 @@ class AddItemScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             TextField(
-              controller: _itemNamecontroller,
+              controller: _itemNameController,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(16),
                 hintText: "ITEM NAME",
@@ -32,12 +33,14 @@ class AddItemScreen extends StatelessWidget {
             SizedBox(height: 20),
             RaisedButton(
               child: Text("ADD ITEM"),
-              onPressed: (){
-                if(_itemNamecontroller.text.isEmpty){
+              onPressed: () async {
+                if(_itemNameController.text.isEmpty){
                   return;
                 }
-                ItemAddNotifier itemAddNotifier = ItemAddNotifier();
-                itemAddNotifier.addItem(_itemNamecontroller.text);
+                // ItemAddNotifier itemAddNotifier = ItemAddNotifier();  /// [for MODEL]
+                // itemAddNotifier.addItem(_itemNamecontroller.text);
+                await Provider.of<ItemAddNotifier>(context, listen: false)
+                    .addItem(_itemNameController.text);   /// [(1)accept addItem]
                 Navigator.pop(context);
               },
             ),

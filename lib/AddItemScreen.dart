@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prov3/ItemAddNotifier.dart';
+import 'package:prov3/ShopNameNotifier.dart';
 import 'package:provider/provider.dart';
 
 
@@ -11,6 +12,7 @@ class AddItemScreen extends StatelessWidget {
   final String title = "ADD ITEM";
 
   final TextEditingController _itemNameController = TextEditingController();
+  final TextEditingController _shopNameController = TextEditingController();
 
   /// [=== build() ===]
   @override
@@ -20,7 +22,7 @@ class AddItemScreen extends StatelessWidget {
         title: Text(title),
       ),
       body: Container(
-        padding: EdgeInsets.all(32),
+        padding: EdgeInsets.all(20),
         child: Column(
           children: <Widget>[
             TextField(
@@ -44,6 +46,42 @@ class AddItemScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
+            SizedBox(height: 20),
+            RaisedButton(
+              child: Text(
+                "【Descendant】MAKE NEW ITEM ADD SCREEN",
+                style: TextStyle(color: Colors.pink),
+              ),
+              onPressed: () async {
+                Navigator.push(context, MaterialPageRoute(
+                  fullscreenDialog: true,
+                  builder: (context) {
+                      return AddItemScreen();
+                  },
+                ));
+              },
+            ),
+
+            SizedBox(height: 20),
+            TextField(
+              controller: _shopNameController,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(16),
+                hintText: "SHOP NAME",
+              ),
+            ),
+            RaisedButton(
+              child: Text("UPDATE SHOP NAME"),
+              onPressed: () async {
+                if(_shopNameController.text.isEmpty){
+                  return;
+                }
+                await Provider.of<ShopNameNotifier>(context, listen: false)
+                    .updateShopName(_shopNameController.text);
+                Navigator.pop(context);
+              },
+            ),
+
           ],
         ),
       ),
